@@ -8,6 +8,8 @@
 
 (deftest test2v0
   (testing "is"
+    (ok (is "foo" "foo"))
+    (ng (is "foo" "FOO"))
     (testing "$T"
       (ok (is t t))
       (ng (is t nil))
@@ -45,3 +47,25 @@
     (ok (like "foo" "foo"))
     (ok (like "foo" (ppcre:create-scanner "foo")))
     (ng (like "FOO" "foo"))))
+
+(deftest group-by
+  (testing "group-by"
+    (ok (is (group-by '(0 1 2 3 4) #'oddp)
+            '((t 3 1) (nil 4 2 0))))
+    (ok (is (group-by '() #'oddp) nil))
+    (ok (is (group-by '(1 2 3) #'identity)
+            '((3 3) (2 2) (1 1))))))
+
+(deftest jq
+  (testing "identity"
+    (ok (is (jq '(:|foo| (:|bar| 1)) ".") '(:|foo| (:|bar| 1))) "Dot identity")
+    (ok (is (jq '(:|foo| (:|bar| 1)) ".foo") '(:|bar| 1)) "property notation")
+    (ok (is (jq '(:|foo| (:|bar| 1)) ".foo.bar") 1) "deep property notation")
+    (ok (is (jq '(:|foo| ("a" "b" "c")) ".foo.[1]") "b") "array index notation")
+    (ok (is (jq '(1 2 3) ".[]") '(1 2 3)) "array identity notation")
+    (ok (is (jq '(:|foo| 1) "{bar: .foo}")
+            '(:|bar| 1))
+        "object builder notation")
+    (ok (is (jq '(:|foo| 1 :|bar| 2) "{bazz: .bar, piyo: .foo}")
+            '(:|bazz| 2 :|piyo| 1))
+        "object builder notation")))

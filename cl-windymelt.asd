@@ -2,7 +2,7 @@
   :version "0.1.0"
   :author "Windymelt"
   :license ""
-  :depends-on (:cl-annot :cl-ppcre)
+  :depends-on (:cl-annot :cl-ppcre :iterate :jonathan :cl-interpol :alexandria :trivia :trivia.ppcre)
   :components ((:module "src"
                 :components
                 ((:file "main"))))
