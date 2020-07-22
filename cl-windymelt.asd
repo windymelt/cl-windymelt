@@ -2,7 +2,7 @@
   :version "0.1.0"
   :author "Windymelt"
   :license ""
-  :depends-on (:cl-annot)
+  :depends-on (:cl-annot :cl-ppcre)
   :components ((:module "src"
                 :components
                 ((:file "main"))))

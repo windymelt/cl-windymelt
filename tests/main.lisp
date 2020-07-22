@@ -40,4 +40,8 @@
       (ok (is "" DF))
       (ok (is 0 DF))
       (ok (is "0" DF))
-      (ng (is nil DF)))))
+      (ng (is nil DF))))
+  (testing "like"
+    (ok (like "foo" "foo"))
+    (ok (like "foo" (ppcre:create-scanner "foo")))
+    (ng (like "FOO" "foo"))))

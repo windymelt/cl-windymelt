@@ -87,3 +87,9 @@
        (is x F)))
 
 ;; TODO: E/DNE/FDNE
+
+;; like
+
+@export
+(defun like (x y)
+  (is (ppcre:scan y x) D))
